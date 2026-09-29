@@ -11,6 +11,7 @@ La base de données permet de gérer les utilisateurs, les conversations (privé
 - PostgreSQL
 - pgAdmin 4
 - Draw.io (MCD / MLD / Dictionnaire de données)
+- BDdiagram.io(MLD)
 - SQL
 
 ## Modélisation
