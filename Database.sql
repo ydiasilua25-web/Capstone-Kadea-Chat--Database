@@ -1,6 +1,11 @@
+-- ============================================
+-- Kadea Chat — Base de données
+-- ============================================
 
--- 1. Création des tables
+-- 1. Création de la base
+CREATE DATABASE kadea_chat;
 
+-- 2. Création des tables
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     full_name VARCHAR(150) NOT NULL,
@@ -43,7 +48,8 @@ CREATE TABLE user_message (
     UNIQUE (user_id, message_id)
 );
 
--- 2. Données d'exemple
+
+-- 3. Données d'exemple
 
 -- Utilisateurs
 INSERT INTO users (full_name, email, password) VALUES
@@ -59,8 +65,6 @@ INSERT INTO conversations DEFAULT VALUES; -- conversation privée Christian <-> 
 INSERT INTO conversations DEFAULT VALUES; -- conversation privée Sarah <-> Yorgen
 
 -- Participants aux conversations
--- (1=Christian, 2=Junior, 3=Sarah, 4=Patrick, 5=Yorgen)
--- (conversations : 1=groupe, 2=privée C-J, 5=privée S-Y)
 INSERT INTO user_conversation (user_id, conversation_id) VALUES
 (1, 1),
 (2, 1),
@@ -68,8 +72,8 @@ INSERT INTO user_conversation (user_id, conversation_id) VALUES
 (4, 1),
 (1, 2),
 (2, 2),
-(3, 5),
-(5, 5);
+(3, 3),
+(5, 3);
 
 -- Messages
 INSERT INTO messages (content, author_id, conversation_id) VALUES
@@ -77,8 +81,8 @@ INSERT INTO messages (content, author_id, conversation_id) VALUES
 ('Oui salut Christian, toi aussi tu vas bien ?', 2, 1),
 ('Coucou Christian, ça fait longtemps !', 2, 2),
 ('salut Junior, je suis trop pris ce dernier temps mais demain je vais passer chez toi a la maison', 1, 2),
-('Salut sarah, tu es libre ce soir ?', 5, 5),
-('salut bro, oui je suis libre !', 3, 5);
+('Salut sarah, tu es libre ce soir ?', 5, 3),
+('salut bro, oui je suis libre !', 3, 3);
 
 -- Statuts de lecture des messages (uniquement pour les destinataires, jamais l'auteur)
 INSERT INTO user_message (user_id, message_id, status, read_at) VALUES
@@ -93,7 +97,7 @@ INSERT INTO user_message (user_id, message_id, status, read_at) VALUES
 (3, 5, 'read', '2026-09-03 20:20:40'),
 (5, 6, 'delivered', NULL);
 
--- 3. Requêtes 
+-- 4. Requêtes 
 
 -- Afficher tous les utilisateurs
 SELECT * FROM users;
@@ -137,7 +141,4 @@ SELECT * FROM users WHERE email = 'christian.mwanya@gmail.com';
 
 -- Rechercher les messages d'un utilisateur (en tant qu'auteur)
 SELECT * FROM messages WHERE author_id = 1;
-
--- Soupression des conversations
-DELETE FROM conversations WHERE id IN (3,4,6);
-
+SELECT * FROM messages WHERE conversation_id = 1;
